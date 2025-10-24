@@ -5,6 +5,7 @@ import (
 
 	"github.com/doug-martin/goqu/v9"
 	"github.com/doug-martin/goqu/v9/exp"
+	"github.com/doug-martin/goqu/v9/sqlgen"
 )
 
 func DialectOptions() *goqu.SQLDialectOptions {
@@ -33,6 +34,22 @@ func DialectOptions() *goqu.SQLDialectOptions {
 	}
 
 	opts.QuoteRune = ' '
+	opts.LimitFragment = []byte(" FIRST ")
+	opts.OffsetFragment = []byte(" SKIP ")
+
+	opts.SelectSQLOrder = []sqlgen.SQLFragmentType{
+		sqlgen.CommonTableSQLFragment,
+		sqlgen.SelectWithLimitSQLFragment,
+		sqlgen.FromSQLFragment,
+		sqlgen.JoinSQLFragment,
+		sqlgen.WhereSQLFragment,
+		sqlgen.GroupBySQLFragment,
+		sqlgen.HavingSQLFragment,
+		sqlgen.WindowSQLFragment,
+		sqlgen.CompoundsSQLFragment,
+		sqlgen.OrderWithOffsetFetchSQLFragment,
+		sqlgen.ForSQLFragment,
+	}
 
 	return opts
 }
