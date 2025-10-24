@@ -32,6 +32,8 @@ func DialectOptions() *goqu.SQLDialectOptions {
 		exp.RegexpNotILikeOp: []byte("NOT SIMILAR TO"),
 	}
 
+	opts.QuoteRune = ' '
+
 	return opts
 }
 
